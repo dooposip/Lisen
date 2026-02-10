@@ -1,12 +1,3 @@
----
-title: LiSEN - AI 기반 폭력 감지 시스템
-emoji: 🛡️
-colorFrom: red
-colorTo: blue
-sdk: docker
-app_port: 7860
----
-
 <div style="text-align: center">
     <img src="https://capsule-render.vercel.app/api?type=waving&color=FFC2D1&height=120&text=LiSEN&animation=fadeIn&fontColor=000000&fontSize=60" style="width: 100%;" />
 </div>
