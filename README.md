@@ -49,32 +49,32 @@ app_port: 7860
 이 문서는 LiSEN 프로젝트의 **현재 파일 및 폴더 구조**를 설명합니다.
 ```
 LiSEN/
-├── requirements.txt            # Python 패키지 의존성 목록.
-├── README.md                   # 프로젝트 개요.
-├── board.json                  # 게시판 데이터 저장 (JSON).
-├── run_LiSEN_dashboard.bat     # Streamlit 대시보드 실행 스크립트 (Windows).
+├── requirements.txt                  # Python 패키지 의존성 목록.
+├── README.md                         # 프로젝트 개요.
+├── board.json                        # 게시판 데이터 저장 (JSON).
+├── run_LiSEN_dashboard.bat           # Streamlit 대시보드 실행 스크립트 (Windows).
 ├── configs/
-│   └── config.yaml             # 프로젝트 설정 파일 (모델 경로, YOLO/위험도 설정).
+│   └── config.yaml                   # 프로젝트 설정 파일 (모델 경로, YOLO/위험도 설정).
 ├── data/
-│   ├── processed/              # 처리된 데이터 (라벨, 시퀀스 등).
-│   │   └── pose_dataset.yaml   # YOLO Pose 데이터셋 설정 파일.
-│   └── raw/                    # 원본 데이터 (비디오, JSON, CSV).
+│   ├── processed/                    # 처리된 데이터 (라벨, 시퀀스 등).
+│   │   └── pose_dataset.yaml         # YOLO Pose 데이터셋 설정 파일.
+│   └── raw/                          # 원본 데이터 (비디오, JSON, CSV).
 ├── interfaces/
-│   └── streamlit_app/          # Streamlit 웹 애플리케이션.
-│       ├── app.py              # 앱 진입점 (메인 실행 파일).
-│       ├── Helper.py           # 유틸리티 함수 (데이터 스캔, 요약 렌더링).
-│       ├── label_tools.py      # Pose 라벨링 및 품질 검사 도구.
-│       ├── training_tools.py   # YOLO 모델 학습 관련 도구.
-│       ├── data_validation.py  # 데이터 유효성 검사 도구.
-│       ├── action_labeler.py   # 행동 라벨링 인터페이스.
+│   └── streamlit_app/                # Streamlit 웹 애플리케이션.
+│       ├── app.py                    # 앱 진입점 (메인 실행 파일).
+│       ├── Helper.py                 # 유틸리티 함수 (데이터 스캔, 요약 렌더링).
+│       ├── label_tools.py            # Pose 라벨링 및 품질 검사 도구.
+│       ├── training_tools.py         # YOLO 모델 학습 관련 도구.
+│       ├── data_validation.py        # 데이터 유효성 검사 도구.
+│       ├── action_labeler.py         # 행동 라벨링 인터페이스.
 │       ├── action_dataset_builder.py # 행동 시퀀스 생성 도구.
-│       ├── dataset_augmentation.py # 데이터 증강 도구.
-│       ├── transformer.py      # Transformer 모델 정의 및 학습.
-│       ├── info.py             # 모델 추론, 영상 분석 및 시각화.
-│       └── sidebar.py          # Streamlit 사이드바 UI.
-├── models/                     # AI 모델 가중치 파일.
-│   └── yolo11m-pose.pt         # 기본 Pose 모델.
-├── results/                    # (자동 생성) 분석 결과 저장 폴더 (preview, risk json 등).
+│       ├── dataset_augmentation.py   # 데이터 증강 도구.
+│       ├── transformer.py            # Transformer 모델 정의 및 학습.
+│       ├── info.py                   # 모델 추론, 영상 분석 및 시각화.
+│       └── sidebar.py                # Streamlit 사이드바 UI.
+├── models/                           # AI 모델 가중치 파일.
+│   └── yolo11m-pose.pt               # 기본 Pose 모델.
+├── results/                          # (자동 생성) 분석 결과 저장 폴더 (preview, risk json 등).
 ```
 
 ## 시작하기
@@ -108,17 +108,7 @@ LiSEN/
 ## 주요 파일 설명
 프로젝트의 핵심 기능을 담당하는 파일들은 다음과 같습니다.
 
--   **`interfaces/streamlit_app/app.py`**: Streamlit 웹 애플리케이션의 메인 진입점. 전체 UI를 구성하고, 워크플로우 탭을 조율하며, 다른 모듈의 기능을 통합합니다.
--   **`interfaces/streamlit_app/Helper.py`**: 원본 데이터 스캔(`scan_raw_data`) 및 프로젝트 요약 정보(`render_project_summary`)를 UI에 렌더링하는 유틸리티 함수를 포함합니다.
--   **`interfaces/streamlit_app/label_tools.py`**: YOLO Pose 라벨 생성(`generate_yolo_pose_labels_stream`), 성인/아동 분류(`classify_adult_child`), 키포인트 추출 및 감지 결과 정리 등 데이터 준비의 핵심 로직을 담당합니다.
--   **`interfaces/streamlit_app/training_tools.py`**: YOLO 모델 학습(`yolo_pose_training_tab`)을 위한 UI와 로직을 구현하며, `pose_dataset.yaml`을 동적으로 생성합니다.
--   **`interfaces/streamlit_app/data_validation.py`**: 이미지-라벨 쌍(`validate_image_label_pairs`), YOLO 라벨 값(`validate_label_values`), 행동 라벨 CSV(`validate_action_labels`)의 유효성을 검증하여 데이터 품질을 보장합니다.
--   **`interfaces/streamlit_app/action_labeler.py`**: 사용자가 비디오 프레임에 수동으로 행동 라벨을 지정(`run_action_labeler`)할 수 있는 인터랙티브 도구를 제공합니다.
--   **`interfaces/streamlit_app/action_dataset_builder.py`**: YOLO 키포인트와 수동 행동 라벨을 결합하여 Transformer 모델 입력에 적합한 행동 포즈 시퀀스(`build_action_sequences`)를 구축합니다.
--   **`interfaces/streamlit_app/dataset_augmentation.py`**: 생성된 포즈 시퀀스에 지터, 스케일, 쉬프트, 좌우 반전 등의 데이터 증강(`apply_sequence_augmentations`)을 적용하여 모델의 견고성을 높입니다.
--   **`interfaces/streamlit_app/transformer.py`**: Transformer 모델의 아키텍처(`TransformerClassifier`) 및 학습(`train_transformer_model`) 절차를 정의하며, 위험 분류 시스템의 핵심 알고리즘입니다.
--   **`interfaces/streamlit_app/info.py`**: 모델 추론, 전체 비디오 분석(`analyze_video`), 결과 시각화, 상세 프레임별 분석(`show_frame_labeling_tab`) UI를 처리하며 YOLO 및 Transformer 모델을 통합합니다.
--   **`interfaces/streamlit_app/sidebar.py`**: Streamlit 사이드바의 콘텐츠를 렌더링하며, 프로젝트 가이드, PC 상태 정보, 최근 위험 분석 기록 등을 표시합니다.
--   **`config.yaml`**: YOLO 모델의 설정과 위험 평가 관련 매개변수를 정의하는 주요 설정 파일입니다.
--   **`requirements.txt`**: 프로젝트에 필요한 모든 Python 패키지 및 그 버전 정보를 명시합니다.
--   **`run_LiSEN_dashboard.bat`**: Windows 시스템에서 LiSEN 대시보드를 시작하기 위한 배치 스크립트입니다.
+-   **메인 대시보드 및 UI (`interfaces/streamlit_app/app.py`, `interfaces/streamlit_app/sidebar.py`):** Streamlit 웹 애플리케이션의 메인 진입점이며 전체 사용자 인터페이스를 구성하고 워크플로우 탭을 조정하며 다른 모듈의 기능을 통합합니다. 사이드바 UI를 담당합니다.
+-   **데이터 준비 및 라벨링 (`interfaces/streamlit_app/label_tools.py`, `interfaces/streamlit_app/action_labeler.py`, `interfaces/streamlit_app/data_validation.py`, `interfaces/streamlit_app/action_dataset_builder.py`):** YOLO Pose 라벨 생성, 성인/아동 분류, 키포인트 추출, 데이터 유효성 검사, 수동 행동 라벨링, 그리고 Transformer 모델 입력에 적합한 행동 포즈 시퀀스를 구축하는 모든 과정을 관리합니다.
+-   **AI 모델 관리 및 활용 (`interfaces/streamlit_app/training_tools.py`, `interfaces/streamlit_app/transformer.py`, `interfaces/streamlit_app/info.py`):** YOLO 모델 학습 및 Transformer 모델의 아키텍처 정의, 학습 절차를 포함하여 위험 분류 시스템의 핵심 알고리즘을 담당하며, 모델 추론, 전체 비디오 분석, 결과 시각화, 상세 프레임별 분석 UI를 처리합니다.
+-   **프로젝트 설정 및 실행 (`configs/config.yaml`, `requirements.txt`, `run_LiSEN_dashboard.bat`):** 프로젝트의 전반적인 설정(모델 경로, YOLO/위험도 설정), 필요한 Python 패키지 의존성 목록, 그리고 Windows 시스템에서 Streamlit 대시보드를 시작하기 위한 배치 스크립트를 포함합니다.
