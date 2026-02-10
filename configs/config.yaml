@@ -1,0 +1,15 @@
+model:
+  name: yolo11m                # 사용할 YOLO 모델 크기
+  weights: models/yolo11m.pt   # 모델 가중치 파일 경로
+
+
+  conf: 0.25                   # confidence threshold
+  iou: 0.45                    # IoU threshold
+  imgsz: 640                   # 입력 이미지 크기
+  device: 0                    # GPU 디바이스 ID (또는 cpu)
+
+
+  proximity_px: 64             # 위험 거리 기준 (픽셀)
+  warn: 0.5                    # 경고 레벨 기준
+  critical: 0.8                # 심각 레벨 기준
+  class_thresholds: {}         # 클래스별 임계치 (예: {"knife": {"conf": 0.3}})

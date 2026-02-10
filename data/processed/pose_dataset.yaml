@@ -1,0 +1,9 @@
+train: D:/MBC/machine learning/Tieamproject/Lisen2/data/processed/images/train
+val: D:/MBC/machine learning/Tieamproject/Lisen2/data/processed/images/val
+
+nc: 2
+names:
+  0: Adult
+  1: Child
+
+kpt_shape: [17, 3]
