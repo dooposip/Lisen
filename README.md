@@ -106,8 +106,19 @@ LiSEN/
 -   **yolo11m-pose.pt:** (백업용) 기본 포즈 추정 모델입니다.
 
 ## 주요 파일 설명
--   **`core/realtime_processor.py`**: `1_Realtime_Monitor.py`에서 사용하는 실시간 영상 처리 엔진입니다. YOLO 모델과 Transformer 모델을 연동하여 프레임 단위로 분석하고 결과를 반환합니다.
--   **`interfaces/streamlit_app/pages/1_Realtime_Monitor.py`**: 사용자가 가장 먼저 접하는 **실시간 모니터링 대시보드**입니다. Altair 차트를 이용한 시각화와 사용자 태깅 기능이 구현되어 있습니다.
--   **`interfaces/streamlit_app/modules/info.py`**: 영상 분석(`analyze_video`), 결과 시각화(`draw_box_on_image`), 프레임 라벨링(`show_frame_labeling_tab`) 등 앱의 **핵심 기능**들이 구현된 모듈입니다.
--   **`interfaces/streamlit_app/tabs/tab8.py`**: `info.py`의 함수를 호출하여 **모델 추론 및 상세 분석 탭**을 렌더링합니다.
--   **`models/Lisen.pt`**: 이 프로젝트의 핵심 모델로, 사람의 관절(Pose)과 폭력 여부(Violence/Non-Violence), 객체 종류(Adult/Child)를 탐지하도록 학습되었습니다.
+프로젝트의 핵심 기능을 담당하는 파일들은 다음과 같습니다.
+
+-   **`interfaces/streamlit_app/app.py`**: Streamlit 웹 애플리케이션의 메인 진입점. 전체 UI를 구성하고, 워크플로우 탭을 조율하며, 다른 모듈의 기능을 통합합니다.
+-   **`interfaces/streamlit_app/Helper.py`**: 원본 데이터 스캔(`scan_raw_data`) 및 프로젝트 요약 정보(`render_project_summary`)를 UI에 렌더링하는 유틸리티 함수를 포함합니다.
+-   **`interfaces/streamlit_app/label_tools.py`**: YOLO Pose 라벨 생성(`generate_yolo_pose_labels_stream`), 성인/아동 분류(`classify_adult_child`), 키포인트 추출 및 감지 결과 정리 등 데이터 준비의 핵심 로직을 담당합니다.
+-   **`interfaces/streamlit_app/training_tools.py`**: YOLO 모델 학습(`yolo_pose_training_tab`)을 위한 UI와 로직을 구현하며, `pose_dataset.yaml`을 동적으로 생성합니다.
+-   **`interfaces/streamlit_app/data_validation.py`**: 이미지-라벨 쌍(`validate_image_label_pairs`), YOLO 라벨 값(`validate_label_values`), 행동 라벨 CSV(`validate_action_labels`)의 유효성을 검증하여 데이터 품질을 보장합니다.
+-   **`interfaces/streamlit_app/action_labeler.py`**: 사용자가 비디오 프레임에 수동으로 행동 라벨을 지정(`run_action_labeler`)할 수 있는 인터랙티브 도구를 제공합니다.
+-   **`interfaces/streamlit_app/action_dataset_builder.py`**: YOLO 키포인트와 수동 행동 라벨을 결합하여 Transformer 모델 입력에 적합한 행동 포즈 시퀀스(`build_action_sequences`)를 구축합니다.
+-   **`interfaces/streamlit_app/dataset_augmentation.py`**: 생성된 포즈 시퀀스에 지터, 스케일, 쉬프트, 좌우 반전 등의 데이터 증강(`apply_sequence_augmentations`)을 적용하여 모델의 견고성을 높입니다.
+-   **`interfaces/streamlit_app/transformer.py`**: Transformer 모델의 아키텍처(`TransformerClassifier`) 및 학습(`train_transformer_model`) 절차를 정의하며, 위험 분류 시스템의 핵심 알고리즘입니다.
+-   **`interfaces/streamlit_app/info.py`**: 모델 추론, 전체 비디오 분석(`analyze_video`), 결과 시각화, 상세 프레임별 분석(`show_frame_labeling_tab`) UI를 처리하며 YOLO 및 Transformer 모델을 통합합니다.
+-   **`interfaces/streamlit_app/sidebar.py`**: Streamlit 사이드바의 콘텐츠를 렌더링하며, 프로젝트 가이드, PC 상태 정보, 최근 위험 분석 기록 등을 표시합니다.
+-   **`config.yaml`**: YOLO 모델의 설정과 위험 평가 관련 매개변수를 정의하는 주요 설정 파일입니다.
+-   **`requirements.txt`**: 프로젝트에 필요한 모든 Python 패키지 및 그 버전 정보를 명시합니다.
+-   **`run_LiSEN_dashboard.bat`**: Windows 시스템에서 LiSEN 대시보드를 시작하기 위한 배치 스크립트입니다.
