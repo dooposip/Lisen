@@ -11,7 +11,7 @@
 **실시간 비디오 스트림에서 폭력을 감지하고 위험을 평가하기 위한 고급 AI 대시보드**
 
 ## 📊 Project Presentation
-👉 [LiSEN 발표자료 보기](https://github.com/dooposip/Lisen/blob/main/LiSEN_Presentation.pptx)
+[LiSEN_Presentation.pptx](https://github.com/user-attachments/files/xxxxx/LiSEN_Presentation.pptx)
 
 ## 팀원 소개
 - [빙승현](https://github.com/ProjectBA0) : 자료 수집, 모델 학습 및 개발
