@@ -10,6 +10,9 @@
 어린이집의 가정 내 아동학대 의심 아동 조기 발견 및 신고 자동화 솔루션<br>
 **실시간 비디오 스트림에서 폭력을 감지하고 위험을 평가하기 위한 고급 AI 대시보드**
 
+## 📊 Project Presentation
+👉 [View PPT](./LiSEN_Presentation.pptx)
+
 ## 팀원 소개
 - [빙승현](https://github.com/ProjectBA0) : 자료 수집, 모델 학습 및 개발
 - [정두균](https://github.com/dooposip) : streamlit 제작
